@@ -11,7 +11,7 @@ function SignIn() {
     password: ""
   });
   const { email, password } = formData;
-  console.log(password)
+  
   function onChange(e){
     setFormData( (prevState) => ({
       ...prevState,
