@@ -27,9 +27,9 @@ function SignUp() {
     e.preventDefault();
     try {
       if(!name || !email || !password){
-        return toast.error("Please fill in the fields.")
+        return toast.warning("Please fill in the fields.")
       }else if(password.length<6){
-        return toast.error("Password must contain at least 6 characters !!")
+        return toast.warning("Password must contain at least 6 characters !!")
       }else{
         const auth = getAuth();
       const userCredential = await createUserWithEmailAndPassword(
