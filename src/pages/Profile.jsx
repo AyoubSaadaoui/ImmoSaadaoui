@@ -1,20 +1,62 @@
-import { getAuth } from 'firebase/auth';
+import { AuthCredential, getAuth, updateProfile } from 'firebase/auth';
+import { doc, updateDoc } from 'firebase/firestore';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
+import { db } from '../firebase';
 
 function Profile() {
   const auth = getAuth()
   const navigate = useNavigate();
-  const [fromData, setFromData] = useState({
+  const [formData, setFormData] = useState({
     name: auth.currentUser.displayName,
     email: auth.currentUser.email
   })
-  const { name, email } = fromData;
+  const [changeDetail, setChangeDetail] = useState(false)
+  const { name, email } = formData;
+
   function onLogout() {
     // User is signed out.
     auth.signOut();
     navigate("/")
   }
+
+  function onChange(e) {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.id]: e.target.value
+    }))
+  }
+
+  async function onSubmit() {
+    try {
+      if(auth.currentUser.displayName !== name) {
+        // update display name in firebase auth
+        await updateProfile(auth.currentUser, {
+          displayName: name
+        });
+        // update name in the firestore
+        const docRef = doc(db, "users", auth.currentUser.uid)
+        await updateDoc(docRef, {
+          name,
+        });
+
+        // message
+        const resolveAfter3Sec = new Promise(resolve => setTimeout(resolve, 500));
+        toast.promise(
+        resolveAfter3Sec,
+        {
+          pending: 'Please wait...',
+          success: 'Profile details updated ',
+
+        }
+)
+      }
+    } catch (error) {
+      toast.error("Could not update the profile details !")
+    }
+  }
+
 
   return (
     <>
@@ -26,13 +68,17 @@ function Profile() {
               type='text'
               id='name'
               value={name}
-              className=' mb-6 w-full px-4 py-2 text-xl text-gray-700 bg-white
-              border-gray-300 rounded transition ease-in-out'
+              onChange={onChange}
+              disabled={!changeDetail}
+              className={` mb-6 w-full px-4 py-2 text-xl text-gray-700
+              border-gray-300 rounded transition ease-in-out ${changeDetail && "bg-red-200 focus:bg-red-200"}`}
             />
             <input
               type='email'
               id='email'
               value={email}
+              onChange
+              disabled
               className=' mb-6 w-full px-4 py-2 text-xl text-gray-700 bg-white
               border-gray-300 rounded transition ease-in-out'
             />
@@ -42,8 +88,13 @@ function Profile() {
                 <span
                   className=' text-red-600 hover:text-red-700 transition ease-in-out duration-200
                   cursor-pointer ml-1'
+                  onClick={() => {
+                    // changeDetail=true -> onSubmit()
+                    changeDetail && onSubmit();
+                    setChangeDetail((prevState) => !prevState);
+                  } }
                 >
-                  Edit
+                  {changeDetail ? "Applay change" : "Edit"}
                 </span>
               </p>
               <p
