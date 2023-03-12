@@ -1,4 +1,4 @@
-import { AuthCredential, getAuth, updateProfile } from 'firebase/auth';
+import {  getAuth, updateProfile } from 'firebase/auth';
 import { doc, updateDoc } from 'firebase/firestore';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
@@ -77,7 +77,7 @@ function Profile() {
               type='email'
               id='email'
               value={email}
-              onChange
+
               disabled
               className=' mb-6 w-full px-4 py-2 text-xl text-gray-700 bg-white
               border-gray-300 rounded transition ease-in-out'
