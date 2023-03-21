@@ -160,7 +160,8 @@ export default function CreateListing() {
             ...formData,
             imgUrls,
             geolocation,
-            timestamp: serverTimestamp()
+            timestamp: serverTimestamp(),
+            userRef: auth.currentUser.uid,
         };
 
         delete formDataCopy.images;
@@ -473,26 +474,6 @@ export default function CreateListing() {
                     <img key={file.name} src={URL.createObjectURL(file)} alt={file.name} />
                 ))}
             </div>
-            {/* ///////////////////////////////////////////////  */}
-            {/* <div className='mb-6'>
-            <p className='text-lg font-semibold'>Imagessssss</p>
-                <p className='text-md font-light text-gray-600'> the cover (max 6).</p>
-                <input
-                    type='file'
-                    id='images'
-                    onChange={onChange}
-                    accept='.jpg,.png,.jpeg'
-                    multiple
-                    required
-                    className='w-full px-3 py-1.5 rounded text-xl text-gray-700 bg-white border border-gray-300 text-center
-                    transition duration-150 ease-in-out focus:text-gray-700 focus:bg-white focus:border-slate-600'
-                />
-                {Array.from(images).map((file) => (
-                    <img key={file.name} src={URL.createObjectURL(file)} alt={file.name} />
-                ))}
-
-            </div> */}
-            {/* /////////////////////////////////////////////// */}
             <button
                 className='mb-6 w-full bg-blue-600 text-white uppercase px-7 py-3 text-sm font-medium rounded shadow-sm
                 hover:bg-blue-700 transition duration-150 ease-in-out hover:shadow-lg active:bg-blue-800'
