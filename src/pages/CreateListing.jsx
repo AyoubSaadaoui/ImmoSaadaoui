@@ -96,8 +96,8 @@ export default function CreateListing() {
         let geolocation = {};
         let location;
         if (geolocationEnabled) {
-            geolocation.lat = data?.results[0]?.location?.lat ;
-            geolocation.lng = data?.results[0]?.location?.lng ;
+            geolocation.lat = data?.results[0]?.location?.lat ?? 0 ;
+            geolocation.lng = data?.results[0]?.location?.lng ?? 0 ;
             location =  data?.results?.length === 0 && undefined ;
 
             if (location === undefined) {
