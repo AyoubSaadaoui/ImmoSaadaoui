@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router';
 
 
 
+
 export default function CreateListing() {
     const auth = getAuth()
     const navigate = useNavigate()
@@ -31,6 +32,7 @@ export default function CreateListing() {
         latitude: 0,
         longitude: 0,
         images: {},
+        phoneNumber: null,
     });
     const {
         type,
@@ -47,6 +49,7 @@ export default function CreateListing() {
         latitude,
         longitude,
         images,
+        phoneNumber,
 
     } = formData;
 
@@ -82,7 +85,12 @@ export default function CreateListing() {
     async function onSubmit(e) {
         e.preventDefault();
         setLoading(true);
-        if (offer === true && +discountedPrice > +regularPrice) {
+        if (phoneNumber.length !== 10) {
+            setLoading(false);
+            toast.error ("The phone number must contain 10 number!");
+            return;
+        }
+        if (offer === true && +discountedPrice >= +regularPrice) {
             setLoading(false);
             toast.error ("Discounted price needs to be less than regular price");
             return;
@@ -216,14 +224,27 @@ export default function CreateListing() {
                     Rent
                 </button>
             </div>
-            <p className='text-lg font-semibold mt-6'>Name</p>
+            <p className='text-lg font-semibold mt-6'>Title</p>
             <input
                 type='text'
                 id='name'
                 value={name}
-                placeholder='Name'
+                placeholder='Title'
                 onChange={onChange}
                 maxLength="32"
+                minLength="10"
+                required
+                className='w-full px-4 py-2 rounded text-xl text-gray-700 bg-white border border-gray-300 mb-6
+                transition duration-150 ease-in-out focus:text-gray-700 focus:bg-white focus:border-slate-600'
+            />
+            <p className='text-lg font-semibold mt-6'>Phone Number</p>
+            <input
+                type='tel'
+                id='phoneNumber'
+                value={phoneNumber}
+                placeholder='0606110023'
+                onChange={onChange}
+                maxLength="10"
                 minLength="10"
                 required
                 className='w-full px-4 py-2 rounded text-xl text-gray-700 bg-white border border-gray-300 mb-6
