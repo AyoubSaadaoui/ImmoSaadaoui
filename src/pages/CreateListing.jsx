@@ -501,7 +501,12 @@ export default function CreateListing() {
                     transition duration-150 ease-in-out focus:text-gray-700 focus:bg-white focus:border-slate-600'
                 />
                 {Array.from(images).map((file) => (
-                    <img key={file.name} src={URL.createObjectURL(file)} alt={file.name} />
+                    <img
+                        className='scale-90 rounded-lg object-cover mb-[-20px]'
+                        key={file.name}
+                        src={URL.createObjectURL(file)}
+                        alt={file.name}
+                    />
                 ))}
             </div>
             <button

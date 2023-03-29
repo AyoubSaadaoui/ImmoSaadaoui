@@ -83,7 +83,7 @@ export default function CreateListing() {
 
 
     // Using a query hook automatically fetches data and returns query values
-    const { data } = useGetGeolocationQuery(address)
+    // const { data } = useGetGeolocationQuery(address)
 
     function onChange(e) {
         let boolean = null;
