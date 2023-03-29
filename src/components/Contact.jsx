@@ -13,7 +13,7 @@ export default function Contact({ userRef, listing }) {
             if (docSnap.exists()) {
                 setLandlord(docSnap.data());
             } else {
-                toast.error("Cloid not get landlord data");
+                toast.error("Cloud not get landlord data");
             }
         }
         getLandlord();

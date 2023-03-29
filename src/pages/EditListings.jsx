@@ -5,7 +5,7 @@ import { useGetGeolocationQuery } from '../redux/services/trueWayPlaces';
 import {  getAuth } from 'firebase/auth';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
 import { v4 as uuidv4 } from 'uuid';
-import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore'
+import { doc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useNavigate, useParams } from 'react-router';
 
@@ -132,12 +132,21 @@ export default function CreateListing() {
 
         let geolocation = {};
         let location;
+        const options = {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': '3e4277fd7fmsh0bc93fb5e985052p11948fjsna8e2af29ee68',
+                'X-RapidAPI-Host': 'trueway-places.p.rapidapi.com'
+            }
+        };
+        const response = await fetch(`https://trueway-places.p.rapidapi.com/FindPlaceByText?text=${address}&language=en`, options);
+        const data = await response.json();
         if (geolocationEnabled) {
-            geolocation.lat = data?.results[0]?.location?.lat ?? 0 ;
-            geolocation.lng = data?.results[0]?.location?.lng ?? 0 ;
-            location =  data?.results?.length === 0 && undefined ;
+            geolocation.lat = data?.results[0].location.lat;
+            geolocation.lng = data?.results[0].location.lng;
+            location =  data?.results?.length === 0 && "0" ;
 
-            if (location === undefined) {
+            if (location === 0) {
                 setLoading(false);
                 toast.error("please enter a correct address");
                 return;
