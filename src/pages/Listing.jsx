@@ -82,14 +82,15 @@ export default function Listing() {
         <div className='m-4 flex flex-col md:flex-row max-w-6xl lg:max-auto p-4 rounded-lg shadow-lg bg-white lg:space-x-5'>
             <div className='w-full '>
                 <p className='text-2xl font-bold mb-3 text-blue-900 '>
-                {listing.name} - Dhs{" "}
+                {listing.name} - {" "}
                 {listing.offer
                     ? listing.discountedPrice
                         .toString()
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                     : listing.regularPrice
                         .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                }Dhs
                 {listing.type === "rent" ? " / month" : ""}
                 </p>
                 <p className='flex itmes-center font-semibold mt-6 mb-3 '>
