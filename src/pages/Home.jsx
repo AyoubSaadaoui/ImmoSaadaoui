@@ -6,7 +6,7 @@ import Slider from '../components/Slider';
 import { db } from '../firebase';
 
 export default function Home() {
-  
+
   // Offers
   const [offerListings, setOfferListings] = useState(null);
   useEffect(() => {
@@ -115,7 +115,7 @@ export default function Home() {
                 Show more offers
               </p>
             </Link>
-            <ul className='sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl-grid-cols-5 mt-6 mb-6'>
+            <ul className='sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 mt-6 mb-6'>
               {offerListings?.map((listing) => (
                 <ListingItem
                   key={listing.id}
@@ -138,7 +138,7 @@ export default function Home() {
                 Show more places for rent
               </p>
             </Link>
-            <ul className='sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl-grid-cols-5 mt-6 mb-6'>
+            <ul className='sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 mt-6 mb-6'>
               {rentListings?.map((listing) => (
                 <ListingItem
                   key={listing.id}
@@ -161,7 +161,7 @@ export default function Home() {
                 Show more places for sale
               </p>
             </Link>
-            <ul className='sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl-grid-cols-5 mt-6 mb-6'>
+            <ul className='sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 mt-6 mb-6'>
               {saleListings?.map((listing) => (
                 <ListingItem
                   key={listing.id}
